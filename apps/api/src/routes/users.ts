@@ -163,7 +163,7 @@ router.get('/', authenticateToken, async (req: any, res: any) => {
     ]);
 
     return res.json({
-      users: users.map((u) => ({
+      users: users.map((u: any) => ({
         ...u,
         walletBalance: u.wallet?.balance || 0,
       })),

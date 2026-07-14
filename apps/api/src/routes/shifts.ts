@@ -114,7 +114,7 @@ router.post('/:id/claim', authenticateToken, async (req: any, res: any) => {
     }
 
     // Check if already claimed
-    if (shift.assignments.some((a) => a.agentId === agentId)) {
+    if (shift.assignments.some((a: any) => a.agentId === agentId)) {
       return res.status(400).json({ error: 'You have already claimed this shift' });
     }
 
@@ -155,7 +155,7 @@ router.get('/earnings', authenticateToken, async (req: any, res: any) => {
 
     // Payout incentives per delivery is ₹15.00
     const PAYOUT_INCENTIVE = 15.0;
-    const ledger = deliveries.map((d) => ({
+    const ledger = deliveries.map((d: any) => ({
       id: d.id,
       orderNumber: d.orderNumber,
       amount: PAYOUT_INCENTIVE,
@@ -174,7 +174,7 @@ router.get('/earnings', authenticateToken, async (req: any, res: any) => {
       const dayName = daysOfWeek[date.getDay()];
 
       // Count deliveries completed on this date
-      const count = deliveries.filter((d) => {
+      const count = deliveries.filter((d: any) => {
         const delDate = new Date(d.actualDelivery || d.updatedAt);
         return delDate.toDateString() === dateString;
       }).length;
@@ -186,7 +186,7 @@ router.get('/earnings', authenticateToken, async (req: any, res: any) => {
       });
     }
 
-    const totalEarnings = ledger.reduce((sum, item) => sum + item.amount, 0);
+    const totalEarnings = ledger.reduce((sum: any, item: any) => sum + item.amount, 0);
 
     return res.json({
       ledger,

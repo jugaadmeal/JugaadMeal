@@ -53,7 +53,7 @@ router.post('/purchase', authenticateToken, async (req: any, res: any) => {
     }
 
     // Atomically debit wallet and create subscription
-    const subscription = await prisma.$transaction(async (tx) => {
+    const subscription = await prisma.$transaction(async (tx: any) => {
       const w = await tx.wallet.update({
         where: { userId },
         data: { balance: { decrement: price } },

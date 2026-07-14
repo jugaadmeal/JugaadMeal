@@ -74,7 +74,7 @@ router.post('/topup', authenticateToken, async (req: any, res: any) => {
       });
     }
 
-    const updatedWallet = await prisma.$transaction(async (tx) => {
+    const updatedWallet = await prisma.$transaction(async (tx: any) => {
       const w = await tx.wallet.update({
         where: { userId },
         data: { balance: { increment: numAmount } },
@@ -153,7 +153,7 @@ router.post('/withdraw', authenticateToken, async (req: any, res: any) => {
       return res.status(400).json({ error: 'Insufficient wallet balance for withdrawal' });
     }
 
-    const updatedWallet = await prisma.$transaction(async (tx) => {
+    const updatedWallet = await prisma.$transaction(async (tx: any) => {
       const updated = await tx.wallet.update({
         where: { userId: req.user.userId },
         data: { balance: { decrement: numAmount } },
@@ -295,7 +295,7 @@ router.post('/webhook', async (req: any, res: any) => {
       });
     }
 
-    const updatedWallet = await prisma.$transaction(async (tx) => {
+    const updatedWallet = await prisma.$transaction(async (tx: any) => {
       const w = await tx.wallet.update({
         where: { userId },
         data: { balance: { increment: parseFloat(amount) } },

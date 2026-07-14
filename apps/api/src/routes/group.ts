@@ -456,7 +456,7 @@ router.post('/checkout', authenticateToken, async (req: any, res: any) => {
     const scheduledFor = new Date();
     scheduledFor.setMinutes(scheduledFor.getMinutes() + 30);
 
-    const finalOrder = await prisma.$transaction(async (tx) => {
+    const finalOrder = await prisma.$transaction(async (tx: any) => {
       // Debit wallets
       for (const ded of transactionDeductions) {
         const w = await tx.wallet.update({

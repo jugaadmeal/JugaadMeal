@@ -24,7 +24,7 @@ router.get('/overview', authenticateToken, async (req: any, res: any) => {
       where: { createdAt: { gte: today }, status: { notIn: ['CANCELLED', 'REFUNDED'] } },
       select: { totalAmount: true },
     });
-    const todayRevenue = todayOrders.reduce((sum, o) => sum + o.totalAmount, 0);
+    const todayRevenue = todayOrders.reduce((sum: any, o: any) => sum + o.totalAmount, 0);
 
     // Active orders (pending, confirmed, preparing, ready, out for delivery)
     const activeOrdersCount = await prisma.order.count({

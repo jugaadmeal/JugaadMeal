@@ -47,7 +47,7 @@ export async function runSubscriptionAutoOrderJob() {
       }
 
       // 2. Auto-place order
-      const itemsToOrder = sub.menu.items.map((item) => ({
+      const itemsToOrder = sub.menu.items.map((item: any) => ({
         menuItemId: item.id,
         quantity: 1,
         unitPrice: 0.0, // Prepaid thali pass order
@@ -73,7 +73,7 @@ export async function runSubscriptionAutoOrderJob() {
         scheduledFor.setMinutes(scheduledFor.getMinutes() + 30);
       }
 
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx: any) => {
         // Place the prepaid order
         const order = await tx.order.create({
           data: {

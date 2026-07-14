@@ -31,7 +31,7 @@ export async function runNudgeJob() {
     const pollChoices: { menuId: string; menuName: string; itemNames: string[] }[] = [];
     for (const option of activePoll.options) {
       const menuName = option.menu.name;
-      const itemNames = option.menu.items.map((i) => i.name.toLowerCase());
+      const itemNames = option.menu.items.map((i: any) => i.name.toLowerCase());
       pollChoices.push({
         menuId: option.menuId,
         menuName: menuName.toLowerCase(),
@@ -44,7 +44,7 @@ export async function runNudgeJob() {
       where: { pollId: activePoll.id },
       select: { userId: true },
     });
-    const votedUserIds = votes.map((v) => v.userId);
+    const votedUserIds = votes.map((v: any) => v.userId);
 
     const usersToNudge = await prisma.user.findMany({
       where: {
@@ -73,7 +73,7 @@ export async function runNudgeJob() {
           },
         },
       });
-      const orderedItemNames = new Set(orderItems.map((oi) => oi.menuItem.name.toLowerCase()));
+      const orderedItemNames = new Set(orderItems.map((oi: any) => oi.menuItem.name.toLowerCase()));
 
       // Find past votes for this user
       const pastVotes = await prisma.vote.findMany({
@@ -90,7 +90,7 @@ export async function runNudgeJob() {
           },
         },
       });
-      const votedMenuNames = new Set(pastVotes.map((v) => v.option.menu.name.toLowerCase()));
+      const votedMenuNames = new Set(pastVotes.map((v: any) => v.option.menu.name.toLowerCase()));
 
       // Match item names or menu names
       let matchedChoice: string | null = null;
