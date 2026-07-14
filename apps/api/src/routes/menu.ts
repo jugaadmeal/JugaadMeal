@@ -30,7 +30,7 @@ router.get('/', authenticateToken, async (req: any, res: any) => {
     });
 
     // Map output to MenuDTO structure
-    const dtos = menus.map((m) => ({
+    const dtos = menus.map((m: any) => ({
       id: m.id,
       collegeId: m.collegeId,
       name: m.name,
