@@ -157,9 +157,12 @@ app.use('/api/subscriptions', subscriptionsRouter);
 app.use('/api/lockers', lockersRouter);
 app.use('/api/shifts', shiftsRouter);
 
-// Health check endpoint
+// Health check and root endpoints
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+app.get('/', (req, res) => {
+  res.json({ message: 'JugaadMeal API Server is running successfully!', status: 'online' });
 });
 
 // Error handling middleware
