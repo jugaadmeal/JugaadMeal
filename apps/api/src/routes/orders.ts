@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { OrderStatus } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { authenticateToken } from './auth';
 
@@ -110,9 +109,9 @@ router.get('/', authenticateToken, async (req: any, res: any) => {
       });
     }
 
-    const activeStatuses: OrderStatus[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
+    const activeStatuses: any[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
     const enrichedOrders = await Promise.all(
-      orders.map(async (o) => {
+      orders.map(async (o: any) => {
         let queuePosition = null;
         if (activeStatuses.includes(o.status)) {
           queuePosition = await prisma.order.count({
@@ -159,7 +158,7 @@ router.get('/:id', authenticateToken, async (req: any, res: any) => {
       return res.status(403).json({ error: 'Unauthorized to view this order' });
     }
 
-    const activeStatuses: OrderStatus[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
+    const activeStatuses: any[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
     let queuePosition = null;
     if (activeStatuses.includes(order.status)) {
       queuePosition = await prisma.order.count({
@@ -225,7 +224,7 @@ router.post('/', authenticateToken, async (req: any, res: any) => {
     const orderItemsToCreate = [];
 
     for (const item of items) {
-      const dbItem = menu.items.find((i) => i.id === item.menuItemId);
+      const dbItem = menu.items.find((i: any) => i.id === item.menuItemId);
       if (!dbItem || !dbItem.isAvailable) {
         return res.status(400).json({ error: `Item ${item.menuItemId} is not available` });
       }
@@ -300,7 +299,7 @@ router.post('/', authenticateToken, async (req: any, res: any) => {
       }
 
       // Deduct balances
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx: any) => {
         await tx.wallet.update({
           where: { userId },
           data: { 
@@ -611,18 +610,18 @@ router.patch('/:id/status', authenticateToken, async (req: any, res: any) => {
       });
 
       // Broadcast updated queue positions to all active orders
-      const activeStatuses: OrderStatus[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
+      const activeStatuses: any[] = ['PENDING', 'CONFIRMED', 'PREPARING'];
       prisma.order.findMany({
         where: { status: { in: activeStatuses } },
         orderBy: { createdAt: 'asc' },
-      }).then((activeOrders) => {
-        activeOrders.forEach((o, index) => {
+      }).then((activeOrders: any[]) => {
+        activeOrders.forEach((o: any, index: number) => {
           io.emit('order:queue_update', {
             orderId: o.id,
             queuePosition: index + 1,
           });
         });
-      }).catch((err) => {
+      }).catch((err: any) => {
         console.error('Error broadcasting queue updates:', err);
       });
 
@@ -862,7 +861,7 @@ router.post('/:id/cancel', authenticateToken, async (req: any, res: any) => {
     }
 
     // Perform cancel & refund
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       await tx.order.update({
         where: { id: orderId },
         data: {
