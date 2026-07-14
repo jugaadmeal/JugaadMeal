@@ -1,6 +1,6 @@
-# CampusEats  Bento App 🍱
+# JugaadMeal  Bento App 🍱
 
-CampusEats is a premium on-campus food delivery and collaborative menu-polling platform built for universities.
+JugaadMeal is a premium on-campus food delivery and collaborative menu-polling platform built for universities.
 
 ## Technology Stack
 
@@ -18,8 +18,8 @@ CampusEats is a premium on-campus food delivery and collaborative menu-polling p
 Ensure you have a PostgreSQL database ready (e.g. from local server or Supabase) and update `apps/api/.env`:
 
 ```env
-DATABASE_URL="postgresql://username:password@localhost:5432/campuseats?schema=public"
-NEXTAUTH_SECRET="campuseats-super-secret-key-123"
+DATABASE_URL="postgresql://username:password@localhost:5432/JugaadMeal?schema=public"
+NEXTAUTH_SECRET="JugaadMeal-super-secret-key-123"
 PORT=5000
 ```
 
