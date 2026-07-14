@@ -265,7 +265,7 @@ router.post('/:id/vote', authenticateToken, async (req: any, res: any) => {
     }
 
     // Use transaction to ensure thread-safe increment / vote switching
-    const voteResult = await prisma.$transaction(async (tx) => {
+    const voteResult = await prisma.$transaction(async (tx: any) => {
       // Check if already voted
       const existingVote = await tx.vote.findUnique({
         where: {
@@ -484,7 +484,7 @@ router.post('/:id/finalize', authenticateToken, async (req: any, res: any) => {
     const winnerOption = sortedOptions[0];
 
     // Mark winner
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       await tx.pollOption.update({
         where: { id: winnerOption.id },
         data: { isWinner: true },
@@ -533,7 +533,7 @@ router.post('/:id/finalize', authenticateToken, async (req: any, res: any) => {
     });
 
     await prisma.notification.createMany({
-      data: students.map((s) => ({
+      data: students.map((s: any) => ({
         userId: s.id,
         type: 'POLL_RESULT',
         title: '🎉 Tomorrow\'s Lunch Winner Selected!',
@@ -606,7 +606,7 @@ router.post('/', authenticateToken, async (req: any, res: any) => {
     });
 
     await prisma.notification.createMany({
-      data: students.map((s) => ({
+      data: students.map((s: any) => ({
         userId: s.id,
         type: 'POLL_OPENED',
         title: '🗳️ New Menu Poll Live!',
