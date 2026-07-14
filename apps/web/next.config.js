@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['shared-types', 'ui-tokens'],
   outputFileTracing: false,
+  output: 'export',
   experimental: {
     optimizePackageImports: ['lucide-react', 'recharts'],
   },
