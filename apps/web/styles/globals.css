@@ -1,0 +1,778 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  }
+}
+
+:root {
+  --primary: #FF6B30;
+  --primary-hover: #E55920;
+  --primary-light: #FFF7F4;
+  --primary-glow: rgba(255, 107, 48, 0.15);
+  
+  --secondary: #1D2B4A;
+  --secondary-light: #2D3E6B;
+  
+  --accent: #F7C948;
+  --accent-light: #fdf3d1;
+  
+  --success: #22C55E;
+  
+  --surface: #FAFAF8;
+  --surface-card: #FFFFFF;
+  --surface-dark: #F4F3EF;
+  
+  --text-primary: #1D2B4A;
+  --text-muted: #6B6B63;
+  
+  --border-warm: #E8E6E1;
+}
+
+.dark {
+  --primary: #FF7B47;
+  --primary-hover: #ff8e61;
+  --primary-light: #2a1b14;
+  --primary-glow: rgba(255, 123, 71, 0.25);
+  
+  --secondary: #1D2B4A;
+  --secondary-light: #23345A;
+  
+  --accent: #FAD161;
+  --accent-light: #302a18;
+  
+  --success: #22C55E;
+  
+  --surface: #0B0F19;
+  --surface-card: #131A2B;
+  --surface-dark: #1A243D;
+  
+  --text-primary: #F8F9FA;
+  --text-muted: #9CA3AF;
+  
+  --border-warm: #223050;
+}
+
+.dark .dark-mode-logo-filter {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Dark Mode Accessibility & Readability Overrides */
+.dark .text-secondary {
+  color: var(--text-primary) !important;
+}
+
+.dark .bg-white {
+  background-color: var(--surface-card) !important;
+}
+
+.dark button.bg-secondary {
+  background-color: var(--secondary-light) !important;
+}
+
+.dark button.bg-secondary:hover {
+  background-color: var(--primary) !important;
+}
+
+/* Status & Soft Alert Backgrounds in Dark Mode */
+.dark .bg-orange-50,
+.dark .bg-orange-50\/95,
+.dark .bg-orange-50\/90,
+.dark .bg-orange-50\/80,
+.dark .bg-orange-50\/70,
+.dark .bg-orange-50\/60,
+.dark .bg-orange-50\/50,
+.dark .bg-orange-50\/40,
+.dark .bg-orange-50\/30,
+.dark .bg-orange-50\/20,
+.dark .bg-orange-50\/10 {
+  background-color: var(--primary-light) !important;
+}
+
+.dark .bg-yellow-50 {
+  background-color: var(--accent-light) !important;
+}
+
+.dark .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+}
+
+.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+.dark .bg-purple-50 {
+  background-color: rgba(168, 85, 247, 0.15) !important;
+}
+
+.dark .bg-indigo-50 {
+  background-color: rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Badge background and text mappings in dark mode */
+.dark .bg-green-100 {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+}
+.dark .text-green-700 {
+  color: #4ADE80 !important;
+}
+
+.dark .bg-orange-100 {
+  background-color: rgba(249, 115, 22, 0.15) !important;
+}
+.dark .text-orange-700 {
+  color: #FB923C !important;
+}
+
+.dark .bg-yellow-100 {
+  background-color: rgba(234, 179, 8, 0.15) !important;
+}
+.dark .text-yellow-700 {
+  color: #FBBF24 !important;
+}
+
+/* Status-specific text color overrides for dark mode badges */
+.dark .text-yellow-600 {
+  color: #FBBF24 !important;
+}
+.dark .text-blue-600 {
+  color: #60A5FA !important;
+}
+.dark .text-orange-600 {
+  color: #FB923C !important;
+}
+.dark .text-purple-600 {
+  color: #C084FC !important;
+}
+.dark .text-indigo-600 {
+  color: #818CF8 !important;
+}
+.dark .text-green-600 {
+  color: #34D399 !important;
+}
+.dark .text-red-600 {
+  color: #F87171 !important;
+}
+
+/* Border styling in dark mode */
+.dark .border-orange-100 {
+  border-color: rgba(249, 115, 22, 0.25) !important;
+}
+.dark .border-yellow-200 {
+  border-color: rgba(234, 179, 8, 0.25) !important;
+}
+.dark .border-blue-200 {
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+.dark .border-orange-200 {
+  border-color: rgba(249, 115, 22, 0.25) !important;
+}
+.dark .border-purple-200 {
+  border-color: rgba(168, 85, 247, 0.25) !important;
+}
+.dark .border-indigo-200 {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+.dark .border-green-200 {
+  border-color: rgba(34, 197, 94, 0.25) !important;
+}
+.dark .border-red-200 {
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Hover bg white override in dark mode */
+.dark .hover\:bg-white:hover {
+  background-color: var(--surface-dark) !important;
+}
+
+/* Light Slate & Gray Overrides in Dark Mode (Eliminating "White Black Mixture" Readability Issues) */
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-slate-200,
+.dark .bg-slate-300,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-gray-300 {
+  background-color: var(--surface-dark) !important;
+}
+
+.dark .text-slate-700,
+.dark .text-slate-800,
+.dark .text-slate-900,
+.dark .text-gray-700,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: var(--border-warm) !important;
+}
+
+.dark .hover\:bg-slate-100:hover,
+.dark .hover\:bg-slate-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-50:hover {
+  background-color: var(--surface-card) !important;
+}
+
+/* Light Gradient Utilities Overrides in Dark Mode */
+.dark .from-white {
+  --tw-gradient-from: var(--surface-card) !important;
+  --tw-gradient-to: rgba(19, 26, 43, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .via-white {
+  --tw-gradient-to: rgba(19, 26, 43, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--surface-card) !important, var(--tw-gradient-to) !important;
+}
+
+.dark .to-white {
+  --tw-gradient-to: var(--surface-card) !important;
+}
+
+.dark .from-orange-50,
+.dark .from-orange-50\/95,
+.dark .from-orange-50\/90,
+.dark .from-orange-50\/80,
+.dark .from-orange-50\/70,
+.dark .from-orange-50\/60,
+.dark .from-orange-50\/50,
+.dark .from-orange-50\/40,
+.dark .from-orange-50\/30,
+.dark .from-orange-50\/20,
+.dark .from-orange-50\/10 {
+  --tw-gradient-from: var(--primary-light) !important;
+  --tw-gradient-to: rgba(42, 27, 20, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.dark .to-orange-50,
+.dark .to-orange-50\/95,
+.dark .to-orange-50\/90,
+.dark .to-orange-50\/80,
+.dark .to-orange-50\/70,
+.dark .to-orange-50\/60,
+.dark .to-orange-50\/50,
+.dark .to-orange-50\/40,
+.dark .to-orange-50\/30,
+.dark .to-orange-50\/20,
+.dark .to-orange-50\/10 {
+  --tw-gradient-to: var(--primary-light) !important;
+}
+
+
+/* ============================================
+   Jugaadmeal — Premium Design System
+   ============================================ */
+
+@layer base {
+  body {
+    @apply bg-surface text-text-primary min-h-screen antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(255, 107, 48, 0.15);
+    color: #FF6B30;
+  }
+}
+
+/* ============================================
+   Custom Scrollbars
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF6B30 0%, #E55920 100%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #E55920 0%, #c04518 100%);
+}
+
+/* ============================================
+   Keyframe Animations
+   ============================================ */
+
+/* Fade in from below */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in from above */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scale in from center */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide out to right */
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Backdrop fade in */
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Pulsing glow effect */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.15), 0 0 40px rgba(255, 107, 53, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.3), 0 0 60px rgba(255, 107, 53, 0.1);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Gradient shifting background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Skeleton Loading Shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Gradient border rotation */
+@keyframes gradientRotate {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+/* Progress bar fill */
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+/* Count up pulse */
+@keyframes countPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Dot pulse (for loading indicators) */
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* Staggered entry helper */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Animation Utility Classes
+   ============================================ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-out-right {
+  animation: slideOutRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-backdrop-in {
+  animation: backdropFadeIn 0.3s ease-out both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-progress-fill {
+  animation: progressFill 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-count-pulse {
+  animation: countPulse 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Stagger delay helpers */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+
+/* ============================================
+   Glass & Card Utilities
+   ============================================ */
+
+.panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.panel-dark {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+}
+
+/* ============================================
+   Gradient & Glow Utilities
+   ============================================ */
+
+.gradient-border {
+  position: relative;
+  background-clip: padding-box;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7C948 50%, #FF6B35 100%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+.glow-primary {
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.15), 0 0 40px rgba(255, 107, 53, 0.05);
+}
+
+.glow-primary-strong {
+  box-shadow: 0 0 30px rgba(255, 107, 53, 0.25), 0 0 60px rgba(255, 107, 53, 0.1);
+}
+
+/* ============================================
+   Card Hover Effects
+   ============================================ */
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.hover-scale {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================
+   Background Patterns & Decorative
+   ============================================ */
+
+.bg-grid-pattern {
+  background-image: 
+    radial-gradient(circle, rgba(255, 107, 53, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-mesh-gradient {
+  background: 
+    radial-gradient(at 20% 80%, rgba(255, 107, 53, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(247, 201, 72, 0.10) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(34, 197, 94, 0.06) 0px, transparent 50%);
+}
+
+.bg-mesh-main-hero {
+  background:
+    radial-gradient(at 10% 90%, rgba(255, 107, 53, 0.18) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(247, 201, 72, 0.15) 0px, transparent 50%),
+    radial-gradient(at 40% 40%, rgba(255, 107, 53, 0.08) 0px, transparent 60%),
+    radial-gradient(at 80% 80%, rgba(34, 197, 94, 0.06) 0px, transparent 50%);
+}
+
+/* ============================================
+   Skeleton Shimmer
+   ============================================ */
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #F4F3EF 25%, #E8E6E1 50%, #F4F3EF 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============================================
+   Form Focus Ring
+   ============================================ */
+
+.focus-ring-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15), 0 0 0 1px rgba(255, 107, 53, 0.3);
+  border-color: #FF6B35;
+}
+
+/* ============================================
+   Gradient Text
+   ============================================ */
+
+.text-gradient-primary {
+  background: linear-gradient(135deg, #FF6B35 0%, #e0531f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7C948 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Dark Mode Overrides
+   ============================================ */
+.dark .text-secondary {
+  color: #F8F9FA !important;
+}
+
+.dark .bg-white {
+  background-color: var(--surface-card) !important;
+}
+
+.dark .hover\:bg-white\/80:hover {
+  background-color: rgba(29, 29, 53, 0.8) !important;
+}
+
+.dark .bg-white\/60 {
+  background-color: rgba(19, 19, 38, 0.6) !important;
+}
+
+.dark .bg-white\/80 {
+  background-color: rgba(19, 19, 38, 0.8) !important;
+}
+
+.dark .border-edge\/50 {
+  border-color: rgba(30, 30, 52, 0.5) !important;
+}
+
+.dark .border-orange-100\/40 {
+  border-color: rgba(255, 107, 53, 0.15) !important;
+}
+
+.dark .border-orange-100\/50 {
+  border-color: rgba(255, 107, 53, 0.2) !important;
+}
+
+.dark .bg-orange-50 {
+  background-color: rgba(255, 107, 53, 0.08) !important;
+}
+
+.dark .bg-orange-50\/75 {
+  background-color: rgba(255, 107, 53, 0.12) !important;
+}
+
+.dark .hover\:bg-orange-50:hover {
+  background-color: rgba(255, 107, 53, 0.15) !important;
+}
+
+.dark .text-primary {
+  color: var(--primary) !important;
+}
+
+.dark .panel {
+  background: rgba(19, 19, 38, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .glass-nav {
+  background: rgba(11, 11, 20, 0.78) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .bg-mesh-main-hero {
+  background:
+    radial-gradient(at 10% 90%, rgba(255, 107, 53, 0.12) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(247, 201, 72, 0.08) 0px, transparent 50%),
+    radial-gradient(at 40% 40%, rgba(255, 107, 53, 0.05) 0px, transparent 60%),
+    radial-gradient(at 80% 80%, rgba(34, 197, 94, 0.04) 0px, transparent 50%),
+    #0B0B14 !important;
+}
+
+.dark .bg-mesh-gradient {
+  background: 
+    radial-gradient(at 20% 80%, rgba(255, 107, 53, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(247, 201, 72, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(34, 197, 94, 0.04) 0px, transparent 50%),
+    #0B0B14 !important;
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(90deg, #131326 25%, #1D1D35 50%, #131326 75%) !important;
+  background-size: 200% 100% !important;
+}
+
+/* Hide scrollbars globally while preserving scroll functionality */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body, * {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Allow thin, minimal visual scrollbars for containers that explicitly request them */
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 5px;
+  height: 5px;
+}
+.show-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border-warm);
+  border-radius: 9999px;
+}
+.show-scrollbar {
+  -ms-overflow-style: auto;
+  scrollbar-width: thin;
+}
+
+/* ============================================
+   Semantic Layout Utilities  
+   ============================================ */
+@layer utilities {
+  .place-center {
+    align-items: center;
+  }
+  .place-mid {
+    justify-content: center;
+  }
+  .align-mid {
+    text-align: center;
+  }
+}

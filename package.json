@@ -1,0 +1,21 @@
+{
+  "name": "campuseats-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "clean": "powershell -Command \"Remove-Item -Recurse -Force apps/web/.next -ErrorAction SilentlyContinue\"",
+    "build": "npm run clean && turbo run build",
+    "start": "npm run clean && turbo run start"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.0"
+  },
+  "optionalDependencies": {
+    "@next/swc-win32-x64-msvc": "14.2.35"
+  }
+}
