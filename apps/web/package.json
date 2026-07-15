@@ -12,6 +12,7 @@
     "@capacitor/cli": "^8.4.1",
     "@capacitor/core": "^8.4.1",
     "@capacitor/ios": "^8.4.1",
+    "@supabase/supabase-js": "^2.110.5",
     "@tanstack/react-query": "^5.24.1",
     "canvas-confetti": "^1.9.2",
     "clsx": "^2.1.0",

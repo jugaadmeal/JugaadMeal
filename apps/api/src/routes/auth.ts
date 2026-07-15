@@ -5,6 +5,7 @@ import prisma from '../lib/prisma';
 const router = Router();
 const JWT_SECRET = process.env.NEXTAUTH_SECRET || 'campuseats-super-secret-key-123';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'campuseats-refresh-token-secret-999';
+const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET || 'campuseats-supabase-secret-placeholder';
 
 // Map to store verification codes in-memory (OTP)
 const otpStore = new Map<string, { code: string; expiresAt: number }>();
@@ -49,7 +50,7 @@ router.post('/send-otp', async (req: any, res: any) => {
   rateLimit.lastRequestedAt = now;
   otpLimitStore.set(key, rateLimit);
 
-  const otp = '123456'; // Default OTP for development convenience
+  const otp = '210573'; // Default OTP for development convenience
   const expiresAt = now + 10 * 60 * 1000; // 10 minutes expiry
 
   otpStore.set(key, { code: otp, expiresAt });
@@ -58,7 +59,7 @@ router.post('/send-otp', async (req: any, res: any) => {
 
   // Return success
   return res.json({
-    message: 'OTP sent successfully (Use 123456 for testing)',
+    message: 'OTP sent successfully (Use 210573 for testing)',
     expiresAt,
   });
 });
@@ -185,6 +186,127 @@ router.post('/verify-otp', async (req: any, res: any) => {
       lastVotedAt: user.lastVotedAt ? user.lastVotedAt.toISOString() : null,
     },
   });
+});
+
+// 2.5. Verify Supabase JWT & Sync Profile
+router.post('/verify-supabase', async (req: any, res: any) => {
+  const { supabaseToken } = req.body;
+
+  if (!supabaseToken) {
+    return res.status(400).json({ error: 'Supabase token is required' });
+  }
+
+  try {
+    // 1. Verify the Supabase JWT
+    const decoded: any = jwt.verify(supabaseToken, SUPABASE_JWT_SECRET);
+    
+    const email = decoded.email;
+    const supabaseId = decoded.sub;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Invalid token payload: email missing' });
+    }
+
+    // 2. Fetch or create user in our Prisma database
+    let user = await prisma.user.findUnique({
+      where: { email },
+      include: { wallet: true },
+    });
+
+    if (user && !user.collegeId) {
+      const college = await prisma.college.findFirst();
+      if (college) {
+        user = await prisma.user.update({
+          where: { id: user.id },
+          data: { collegeId: college.id },
+          include: { wallet: true },
+        });
+      }
+    }
+
+    if (!user) {
+      // Determine a default college
+      const college = await prisma.college.findFirst();
+      const collegeId = college ? college.id : undefined;
+
+      // Register new user, using Supabase sub (UUID) as the primary key
+      user = await prisma.user.create({
+        data: {
+          id: supabaseId,
+          email: email,
+          name: decoded.user_metadata?.name || email.split('@')[0],
+          role: 'STUDENT',
+          collegeId,
+          isVerified: true,
+          wallet: {
+            create: {
+              balance: 500.0, // Welcome bonus of ₹500
+            },
+          },
+        },
+        include: { wallet: true },
+      });
+
+      // Create wallet transaction
+      await prisma.walletTransaction.create({
+        data: {
+          walletId: user.wallet!.id,
+          type: 'CREDIT_TOPUP',
+          amount: 500.0,
+          description: 'Welcome Sign Up Bonus',
+          balanceAfter: 500.0,
+        },
+      });
+    }
+
+    // 3. Generate access and refresh tokens (Jugaadmeal custom tokens)
+    const familyId = Math.random().toString(36).substring(7);
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '15m' }
+    );
+
+    const refreshToken = jwt.sign(
+      { userId: user.id, familyId },
+      JWT_REFRESH_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    // Store refresh token
+    refreshTokensStore.set(refreshToken, {
+      userId: user.id,
+      familyId,
+      isUsed: false,
+      expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.json({
+      token,
+      refreshToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        phone: user.phone,
+        name: user.name,
+        avatar: user.avatar,
+        role: user.role,
+        collegeId: user.collegeId,
+        rollNumber: user.rollNumber,
+        department: user.department,
+        semester: user.semester,
+        hostelBlock: user.hostelBlock,
+        defaultAddress: user.defaultAddress,
+        isVerified: user.isVerified,
+        walletBalance: (user.wallet?.balance || 0) + (user.wallet?.promoBalance || 0),
+        votingStreak: user.votingStreak,
+        lastVotedAt: user.lastVotedAt ? user.lastVotedAt.toISOString() : null,
+      },
+    });
+  } catch (error: any) {
+    console.error('[Supabase Verification Error]', error);
+    return res.status(401).json({ error: 'Invalid or expired Supabase token' });
+  }
 });
 
 // POST /api/auth/refresh - Rotate JWT access & refresh tokens with reuse detection

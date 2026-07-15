@@ -60,9 +60,9 @@ npm run dev
 
 ---
 
-## Role Credentials (OTP: 123456)
+## Role Credentials (OTP: 210573)
 
-Use these seeded email addresses with the sandbox verification code **`123456`** to log in:
+Use these seeded email addresses with the sandbox verification code **`210573`** to log in:
 
 - **Student:** `student@cu.edu` (Arjun Verma - ₹1000 Wallet Balance)
 - **Kitchen Staff:** `kitchen@cu.edu` (Chef Harpal - Live Order Kanban board)
